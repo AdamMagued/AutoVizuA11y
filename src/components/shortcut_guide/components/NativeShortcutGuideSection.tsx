@@ -7,6 +7,7 @@
 
 import { Section } from "../../../assets/data/GuideData";
 import * as constants from "../../../constants";
+import { accessibleKeyLabel } from "../../../utils/accessibleKeyLabel";
 import type { TFunction } from "i18next";
 
 interface ShortcutGuideSectionProps {
@@ -28,16 +29,30 @@ export const ShortcutGuideSection = ({ section, sectionIndex, t }: ShortcutGuide
 				className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideList}
 				aria-labelledby={`listHeader${sectionIndex}`}
 			>
-				{section.shortcuts.map((shortcut, shortcutIndex) => (
-					<div key={shortcutIndex} className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}>
-						<dt className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellShortcut}>
-							{shortcut.keys}
-						</dt>
-						<dd className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellExplanation}>
-							{t(shortcut.description)}
-						</dd>
-					</div>
-				))}
+				{section.shortcuts.map((shortcut, shortcutIndex) => {
+					const label = accessibleKeyLabel(shortcut.keys, t);
+					const hasAccessibleLabel = label !== shortcut.keys;
+
+					return (
+						<div key={shortcutIndex} className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}>
+							<dt className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellShortcut}>
+								<kbd aria-label={label}>
+									{hasAccessibleLabel ? (
+										<>
+											<span aria-hidden="true">{shortcut.keys}</span>
+											<span className="visually-hidden">{label}</span>
+										</>
+									) : (
+										shortcut.keys
+									)}
+								</kbd>
+							</dt>
+							<dd className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellExplanation}>
+								{t(shortcut.description)}
+							</dd>
+						</div>
+					);
+				})}
 			</dl>
 		</div>
 	);
