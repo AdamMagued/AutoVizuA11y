@@ -6,6 +6,7 @@
  */
 
 import * as constants from "../../constants";
+import { playBoundarySound } from "../../utils/boundarySound";
 
 /**
  * Handles the pressing of right arrow key inside the Shortcut Guide
@@ -13,6 +14,7 @@ import * as constants from "../../constants";
 function handleArrowRight(
 	event: React.KeyboardEvent,
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>,
+	sound = true,
 ): void {
 	event.preventDefault();
 
@@ -31,6 +33,8 @@ function handleArrowRight(
 
 	if (nextIndex < rows.length) {
 		(rows[nextIndex] as HTMLElement).focus();
+	} else {
+		playBoundarySound({ enabled: sound });
 	}
 }
 
@@ -40,6 +44,7 @@ function handleArrowRight(
 function handleArrowLeft(
 	event: React.KeyboardEvent,
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>,
+	sound = true,
 ): void {
 	event.preventDefault();
 
@@ -61,6 +66,8 @@ function handleArrowLeft(
 
 	if (prevIndex >= 0) {
 		(rows[prevIndex] as HTMLElement).focus();
+	} else {
+		playBoundarySound({ enabled: sound });
 	}
 }
 
@@ -74,10 +81,12 @@ export function guideKeyHandler({
 	event,
 	shortcutGuideRef,
 	setIsShortcutGuideOpen,
+	sound = true,
 }: {
 	event: React.KeyboardEvent;
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>;
 	setIsShortcutGuideOpen: (bool: boolean) => void;
+	sound?: boolean;
 }): void {
 	const { key } = event;
 
@@ -92,10 +101,10 @@ export function guideKeyHandler({
 			}
 			break;
 		case "ArrowLeft":
-			handleArrowLeft(event, shortcutGuideRef);
+			handleArrowLeft(event, shortcutGuideRef, sound);
 			break;
 		case "ArrowRight":
-			handleArrowRight(event, shortcutGuideRef);
+			handleArrowRight(event, shortcutGuideRef, sound);
 			break;
 		default:
 			break;

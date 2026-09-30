@@ -40,6 +40,7 @@ interface HandleKeyDownProps {
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>;
 	autoDescriptions?: AutoDescriptionsProps;
 	multiSeries?: string;
+	sound?: boolean;
 	t: TFunction<"translation", undefined>;
 }
 /**
@@ -69,6 +70,7 @@ export async function handleKeyDown(
 		shortcutGuideRef,
 		isShortcutGuideOpen,
 		setIsShortcutGuideOpen,
+		sound = true,
 		t,
 	}: HandleKeyDownProps,
 ): Promise<void> {
@@ -87,6 +89,7 @@ export async function handleKeyDown(
 		shortcutGuideRef,
 		isShortcutGuideOpen,
 		setIsShortcutGuideOpen,
+		sound,
 		t,
 	});
 	setNumber(newNumber);

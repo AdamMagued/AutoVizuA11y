@@ -31,6 +31,7 @@ interface NavigationKeyHandlerParams {
 	shortcutGuideRef?: React.RefObject<HTMLDialogElement>;
 	multiSeries?: string;
 	setSelectedSeries?: (series: string) => void;
+	sound?: boolean;
 	t: TFunction<"translation", undefined>;
 }
 interface SwitchSeriesParams {
@@ -61,6 +62,7 @@ export async function navigationKeyHandler(params: NavigationKeyHandlerParams): 
 		shortcutGuideRef,
 		isShortcutGuideOpen,
 		setIsShortcutGuideOpen,
+		sound = true,
 		t,
 	} = params;
 
@@ -70,7 +72,7 @@ export async function navigationKeyHandler(params: NavigationKeyHandlerParams): 
 
 	try {
 		const updatedNumber = await xSetter({ event, type, number, alertDivRef, t });
-		skip({ event, chartRef, selectorType, selectedSeries });
+		skip({ event, chartRef, selectorType, selectedSeries, sound });
 
 		const charts = Array.from(
 			document.getElementsByClassName(constants.DESC_CLASS),
@@ -78,7 +80,7 @@ export async function navigationKeyHandler(params: NavigationKeyHandlerParams): 
 		const chart = chartRef.current?.getElementsByClassName(constants.DESC_CLASS)[0] as HTMLElement;
 
 		if (chart === document.activeElement && charts.includes(chart)) {
-			jumpXCharts({ event, charts, chart });
+			jumpXCharts({ event, charts, chart, sound });
 		} else {
 			jumpXElements({
 				event,
@@ -86,6 +88,7 @@ export async function navigationKeyHandler(params: NavigationKeyHandlerParams): 
 				elements,
 				selectedSeries,
 				series,
+				sound,
 			});
 		}
 

@@ -15,6 +15,7 @@ interface ShortcutGuideContainerProps {
 	shortcutGuide: React.ReactElement | undefined;
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>;
 	setIsShortcutGuideOpen: (bool: boolean) => void;
+	sound?: boolean;
 	t: TFunction;
 }
 
@@ -31,13 +32,14 @@ export const ShortcutGuideContainer = ({
 	shortcutGuide,
 	shortcutGuideRef,
 	setIsShortcutGuideOpen,
+	sound = true,
 	t,
 }: ShortcutGuideContainerProps): JSX.Element => {
 	return (
 		<dialog
 			ref={shortcutGuideRef}
 			onKeyDown={(event) => {
-				guideKeyHandler({ event, shortcutGuideRef, setIsShortcutGuideOpen });
+				guideKeyHandler({ event, shortcutGuideRef, setIsShortcutGuideOpen, sound });
 			}}
 			aria-describedby={constants.SHORTCUTGUIDE_ID.shortcutGuideDescription}
 			aria-labelledby={constants.SHORTCUTGUIDE_ID.shortcutGuideTitle}

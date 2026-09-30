@@ -7,17 +7,26 @@
 
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
+import type { InlineConfig } from "vitest";
 import dts from "vite-plugin-dts";
 import tsconfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react-swc";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
 
+const VITEST_CONFIG: InlineConfig = {
+	globals: true,
+	environment: "jsdom",
+	include: ["./src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+};
+
 // https://vitejs.dev/config/
 export default defineConfig({
+	test: VITEST_CONFIG,
 	plugins: [
 		react(),
 		dts({
 			insertTypesEntry: true,
+			exclude: ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.spec.ts", "src/**/*.spec.tsx"],
 		}),
 		tsconfigPaths(),
 		libInjectCss(),

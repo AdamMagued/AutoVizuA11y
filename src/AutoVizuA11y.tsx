@@ -108,6 +108,16 @@ export type AutoVizuA11yProps = {
 		customTranslations?: CustomTranslations;
 	};
 	/**
+	 * Optional sound configuration. When false, boundary audio feedback is disabled.
+	 * Defaults to true.
+	 */
+	sound?: boolean;
+	/**
+	 * Optional alias for sound configuration. When false, boundary audio feedback is disabled.
+	 * Defaults to true.
+	 */
+	soundEnabled?: boolean;
+	/**
 	 * Wrapped chart.
 	 */
 	children: React.ReactNode;
@@ -166,8 +176,11 @@ export const AutoVizuA11y = ({
 	manualDescriptions,
 	autoDescriptions,
 	internationalization,
+	sound = true,
+	soundEnabled,
 	children,
 }: AutoVizuA11yProps) => {
+	const isAudioEnabled = soundEnabled !== undefined ? soundEnabled : sound;
 	const { t } = useIsolatedI18n(
 		internationalization?.language,
 		internationalization?.customTranslations,
@@ -360,6 +373,7 @@ export const AutoVizuA11y = ({
 				shortcutGuideRef,
 				isShortcutGuideOpen,
 				setIsShortcutGuideOpen,
+				sound: isAudioEnabled,
 				t,
 			};
 			handleKeyDown(event, DATA);
@@ -386,6 +400,7 @@ export const AutoVizuA11y = ({
 			shortcutGuideRef,
 			isShortcutGuideOpen,
 			setIsShortcutGuideOpen,
+			isAudioEnabled,
 			t,
 		],
 	);
@@ -407,6 +422,7 @@ export const AutoVizuA11y = ({
 				shortcutGuide={shortcutGuide}
 				shortcutGuideRef={shortcutGuideRef}
 				setIsShortcutGuideOpen={setIsShortcutGuideOpen}
+				sound={isAudioEnabled}
 				t={t}
 			/>
 		</div>

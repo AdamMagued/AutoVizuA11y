@@ -6,6 +6,7 @@
  */
 
 import React from "react";
+import { playBoundarySound } from "../../utils/boundarySound";
 
 interface JumpXElementsParams {
 	event: React.KeyboardEvent;
@@ -13,11 +14,13 @@ interface JumpXElementsParams {
 	elements: HTMLElement[];
 	selectedSeries: string;
 	series: string[];
+	sound?: boolean;
 }
 interface JumpXChartsParams {
 	event: React.KeyboardEvent;
 	charts: HTMLElement[];
 	chart: HTMLElement;
+	sound?: boolean;
 }
 /**
  * Handles the navigation between X data elements inside a chart.
@@ -30,6 +33,7 @@ export async function jumpXElements({
 	elements,
 	selectedSeries,
 	series,
+	sound = true,
 }: JumpXElementsParams): Promise<void> {
 	const { key, nativeEvent } = event;
 
@@ -51,12 +55,20 @@ export async function jumpXElements({
 
 	switch (key) {
 		case "ArrowLeft":
-			if (currentPosition === 0) return;
+			if (currentPosition === 0) {
+				nativeEvent.preventDefault();
+				playBoundarySound({ enabled: sound });
+				return;
+			}
 			nativeEvent.preventDefault();
 			newPosition = Math.max(0, currentPosition - number);
 			break;
 		case "ArrowRight":
-			if (currentPosition === elements.length - 1) return;
+			if (currentPosition === elements.length - 1) {
+				nativeEvent.preventDefault();
+				playBoundarySound({ enabled: sound });
+				return;
+			}
 			nativeEvent.preventDefault();
 			newPosition = Math.min(elements.length - 1, currentPosition + number);
 			break;
@@ -70,7 +82,7 @@ export async function jumpXElements({
  *
  * @param {JumpXChartsParams} params - The parameters for jumping between charts.
  */
-export function jumpXCharts({ event, charts, chart }: JumpXChartsParams): void {
+export function jumpXCharts({ event, charts, chart, sound = true }: JumpXChartsParams): void {
 	if (chart !== document.activeElement || !charts.includes(chart)) return;
 
 	const currentPosition = charts.indexOf(chart);
@@ -79,12 +91,20 @@ export function jumpXCharts({ event, charts, chart }: JumpXChartsParams): void {
 
 	switch (key) {
 		case "ArrowLeft":
-			if (currentPosition === 0) return;
+			if (currentPosition === 0) {
+				nativeEvent.preventDefault();
+				playBoundarySound({ enabled: sound });
+				return;
+			}
 			nativeEvent.preventDefault();
 			newPosition = currentPosition - 1;
 			break;
 		case "ArrowRight":
-			if (currentPosition === charts.length - 1) return;
+			if (currentPosition === charts.length - 1) {
+				nativeEvent.preventDefault();
+				playBoundarySound({ enabled: sound });
+				return;
+			}
 			nativeEvent.preventDefault();
 			newPosition = currentPosition + 1;
 			break;

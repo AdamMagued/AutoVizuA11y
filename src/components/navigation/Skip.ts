@@ -7,6 +7,7 @@
 
 import React from "react";
 import { getElements } from "../../utils/getElements";
+import { playBoundarySound } from "../../utils/boundarySound";
 
 interface SkipParams {
 	event: React.KeyboardEvent;
@@ -16,6 +17,7 @@ interface SkipParams {
 		className?: string;
 	};
 	selectedSeries: string;
+	sound?: boolean;
 }
 
 /**
@@ -23,7 +25,7 @@ interface SkipParams {
  *
  * @param {SkipParams} params - The parameters for the skip function.
  */
-export function skip({ event, chartRef, selectorType, selectedSeries }: SkipParams): void {
+export function skip({ event, chartRef, selectorType, selectedSeries, sound = true }: SkipParams): void {
 	const elements = getElements({ chartRef, selectorType, selectedSeries });
 	const activeElement = document.activeElement as HTMLElement | null;
 
@@ -34,10 +36,18 @@ export function skip({ event, chartRef, selectorType, selectedSeries }: SkipPara
 
 	if (isSkipToBeginning(nativeEvent)) {
 		nativeEvent.preventDefault();
-		elements[0]?.focus();
+		if (activeElement === elements[0]) {
+			playBoundarySound({ enabled: sound });
+		} else {
+			elements[0]?.focus();
+		}
 	} else if (isSkipToEnd(nativeEvent)) {
 		nativeEvent.preventDefault();
-		elements[elements.length - 1]?.focus();
+		if (activeElement === elements[elements.length - 1]) {
+			playBoundarySound({ enabled: sound });
+		} else {
+			elements[elements.length - 1]?.focus();
+		}
 	}
 }
 
