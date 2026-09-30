@@ -26,10 +26,10 @@ export const CUSTOM_GUIDE_DATA: Section[] = [
 	{
 		title: "Move between page elements",
 		shortcuts: [
-			{ keys: "Down Arrow", description: "Get into a chart" },
-			{ keys: "Up Arrow", description: "Get out of a chart" },
-			{ keys: "Right Arrow", description: "Move forward in a page element" },
-			{ keys: "Left Arrow", description: "Move backward in a page element" },
+			{ keys: "↓", description: "Get into a chart", ariaLabel: "Down Arrow" },
+			{ keys: "↑", description: "Get out of a chart", ariaLabel: "Up Arrow" },
+			{ keys: "→", description: "Move forward in a page element", ariaLabel: "Right Arrow" },
+			{ keys: "←", description: "Move backward in a page element", ariaLabel: "Left Arrow" },
 			{
 				keys: "Alt + M",
 				description: "Move between series of data inside the chart",

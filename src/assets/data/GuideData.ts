@@ -10,6 +10,7 @@ import { isMacOS } from "../../utils/macOSDetector";
 export interface Shortcut {
 	keys: string;
 	description: string;
+	ariaLabel?: string;
 }
 
 export interface Section {
@@ -35,10 +36,10 @@ export function getGuideData(): Section[] {
 		{
 			title: "sg_move_elements_title",
 			shortcuts: [
-				{ keys: "Down Arrow", description: "sg_get_into_chart" },
-				{ keys: "Up Arrow", description: "sg_get_out_of_chart" },
-				{ keys: "Right Arrow", description: "sg_move_forward" },
-				{ keys: "Left Arrow", description: "sg_move_backward" },
+				{ keys: "↓", description: "sg_get_into_chart", ariaLabel: "sg_down_arrow" },
+				{ keys: "↑", description: "sg_get_out_of_chart", ariaLabel: "sg_up_arrow" },
+				{ keys: "→", description: "sg_move_forward", ariaLabel: "sg_right_arrow" },
+				{ keys: "←", description: "sg_move_backward", ariaLabel: "sg_left_arrow" },
 				{
 					keys: `${modifierKey} + M`,
 					description: "sg_move_series",

@@ -16,3 +16,4 @@ export * from "./showAlert";
 export * from "./initToolTutorial";
 export * from "./processData";
 export * from "./macOSDetector";
+export * from "./shortcutAriaLabel";

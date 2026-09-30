@@ -7,6 +7,7 @@
 
 import { Section } from "../../../../../src/assets/data/GuideData";
 import * as constants from "../../../../../src/constants";
+import { getShortcutAriaLabel } from "../../../../../src/utils/shortcutAriaLabel";
 import React from "react";
 
 interface CustomShortcutGuideSectionProps {
@@ -29,20 +30,35 @@ export const CustomShortcutGuideSection = ({
 			className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideList}
 			aria-labelledby={`listHeader${sectionIndex}`}
 		>
-			{section.shortcuts.map((shortcut, shortcutIndex) => (
-				<dl
-					key={shortcutIndex}
-					className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}
-					aria-label={`${shortcut.description}: ${shortcut.keys}`}
-				>
-					<dt className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellShortcut}>
-						{shortcut.keys}
-					</dt>
-					<dd className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellExplanation}>
-						{shortcut.description}
-					</dd>
-				</dl>
-			))}
+			{section.shortcuts.map((shortcut, shortcutIndex) => {
+				const keyAriaLabel = getShortcutAriaLabel(shortcut.keys, shortcut.ariaLabel);
+				const keyDisplayLabel = keyAriaLabel ?? shortcut.keys;
+
+				return (
+					<dl
+						key={shortcutIndex}
+						className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}
+						aria-label={`${shortcut.description}: ${keyDisplayLabel}`}
+					>
+						<dt
+							className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellShortcut}
+							aria-label={keyAriaLabel}
+						>
+							{keyAriaLabel ? (
+								<>
+									<span className="visually-hidden sr-only">{keyAriaLabel}</span>
+									<span aria-hidden="true">{shortcut.keys}</span>
+								</>
+							) : (
+								shortcut.keys
+							)}
+						</dt>
+						<dd className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellExplanation}>
+							{shortcut.description}
+						</dd>
+					</dl>
+				);
+			})}
 		</div>
 	</div>
 );
