@@ -5,6 +5,12 @@ describe("Addition of Attributes to Chart Test", () => {
 		cy.injectAxe();
 		cy.findByTestId("manual-descriptions-option").click();
 		cy.wait(500); // AutoVizuA11y waits 500ms before handling descriptions
+		cy.findAllByTestId("a11y-wrapper")
+			.first()
+			.as("chartWrapper")
+			.should("have.attr", "role", "application");
+		cy.get("@chartWrapper").should("have.attr", "aria-roledescription", "data visualization");
+		cy.get("@chartWrapper").should("have.attr", "aria-label");
 		cy.findAllByTestId("a11y_desc")
 			.first()
 			.as("chartDescription")

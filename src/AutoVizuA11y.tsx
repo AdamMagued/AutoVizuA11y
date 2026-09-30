@@ -108,6 +108,26 @@ export type AutoVizuA11yProps = {
 		customTranslations?: CustomTranslations;
 	};
 	/**
+	 * Optional ARIA role for the interactive chart wrapper. Defaults to "application".
+	 */
+	role?: string;
+	/**
+	 * Optional ARIA role description for the interactive chart wrapper. Defaults to "data visualization".
+	 */
+	ariaRoledescription?: string;
+	/**
+	 * Optional accessible label for the interactive chart wrapper. Defaults to the chart title.
+	 */
+	ariaLabel?: string;
+	/**
+	 * Optional ARIA role description attribute for the interactive chart wrapper.
+	 */
+	"aria-roledescription"?: string;
+	/**
+	 * Optional accessible label attribute for the interactive chart wrapper.
+	 */
+	"aria-label"?: string;
+	/**
 	 * Wrapped chart.
 	 */
 	children: React.ReactNode;
@@ -166,8 +186,17 @@ export const AutoVizuA11y = ({
 	manualDescriptions,
 	autoDescriptions,
 	internationalization,
+	role = "application",
+	ariaRoledescription,
+	"aria-roledescription": ariaRoleDescriptionProp,
+	ariaLabel,
+	"aria-label": ariaLabelProp,
 	children,
 }: AutoVizuA11yProps) => {
+	const resolvedRole = role;
+	const resolvedRoleDescription =
+		ariaRoleDescriptionProp ?? ariaRoledescription ?? "data visualization";
+	const resolvedAriaLabel = ariaLabelProp ?? ariaLabel ?? title;
 	const { t } = useIsolatedI18n(
 		internationalization?.language,
 		internationalization?.customTranslations,
@@ -391,7 +420,13 @@ export const AutoVizuA11y = ({
 	);
 
 	return (
-		<div className={constants.AUTOVIZUA11Y_CLASSES.a11yWrapper} role="application">
+		<div
+			className={constants.AUTOVIZUA11Y_CLASSES.a11yWrapper}
+			role={resolvedRole || undefined}
+			aria-roledescription={resolvedRoleDescription || undefined}
+			aria-label={resolvedAriaLabel || undefined}
+			data-testid="a11y-wrapper"
+		>
 			<div
 				ref={chartRef}
 				onKeyDown={handleOnKeyDown}

@@ -33,6 +33,7 @@
 		"npm": ">= 8"
 	},
 	"scripts": {
+		"test": "npm run build",
 		"format": "npx prettier --write '**/*.{jsx,ts,tsx,js}'",
 		"reinstall": "rimraf node_modules && npm install",
 		"lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" \"cypress/**/*.js\" --fix",
