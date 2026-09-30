@@ -33,6 +33,7 @@ export function handleArrowDown(
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>,
 ): void {
 	event.preventDefault();
+	event.nativeEvent?.preventDefault?.();
 
 	const shortcutGuide = shortcutGuideRef.current;
 	if (!shortcutGuide) return;
@@ -63,6 +64,7 @@ export function handleArrowUp(
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>,
 ): void {
 	event.preventDefault();
+	event.nativeEvent?.preventDefault?.();
 
 	const shortcutGuide = shortcutGuideRef.current;
 	if (!shortcutGuide) return;
@@ -113,7 +115,10 @@ export function guideKeyHandler({
 }): void {
 	const { key } = event;
 
-	const shouldHandleKey = shortcutGuideRef.current?.contains(document.activeElement);
+	const shouldHandleKey =
+		shortcutGuideRef.current &&
+		(shortcutGuideRef.current.contains(document.activeElement) ||
+			shortcutGuideRef.current.contains(event.target as Node));
 
 	switch (key) {
 		case "Escape":

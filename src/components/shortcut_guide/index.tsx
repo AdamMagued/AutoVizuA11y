@@ -58,6 +58,14 @@ export const ShortcutGuideContainer = ({
 			className={constants.AUTOVIZUA11Y_CLASSES.a11yNavGuide}
 			onClose={() => {
 				setIsShortcutGuideOpen(false);
+				if (shortcutGuideRef.current) {
+					const rows = shortcutGuideRef.current.querySelectorAll<HTMLElement>(
+						`.${constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}`,
+					);
+					rows.forEach((r, index) => {
+						r.setAttribute("tabindex", index === 0 ? "0" : "-1");
+					});
+				}
 			}}
 		>
 			{cloneValidElement(shortcutGuide, { dialogRef: shortcutGuideRef, t }) ?? (
