@@ -29,7 +29,12 @@ export const ShortcutGuideSection = ({ section, sectionIndex, t }: ShortcutGuide
 				aria-labelledby={`listHeader${sectionIndex}`}
 			>
 				{section.shortcuts.map((shortcut, shortcutIndex) => (
-					<div key={shortcutIndex} className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}>
+					<div
+						key={shortcutIndex}
+						className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}
+						tabIndex={sectionIndex === 0 && shortcutIndex === 0 ? 0 : -1}
+						aria-label={`${shortcut.keys}: ${t(shortcut.description)}`}
+					>
 						<dt className={constants.SHORTCUTGUIDE_CLASSES.shortcutGuideCellShortcut}>
 							{shortcut.keys}
 						</dt>

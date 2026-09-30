@@ -39,6 +39,20 @@ export const ShortcutGuideContainer = ({
 			onKeyDown={(event) => {
 				guideKeyHandler({ event, shortcutGuideRef, setIsShortcutGuideOpen });
 			}}
+			onFocus={(event) => {
+				const target = event.target as HTMLElement | null;
+				const row = target?.closest?.(
+					`.${constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}`,
+				) as HTMLElement | null;
+				if (row && shortcutGuideRef.current) {
+					const rows = shortcutGuideRef.current.querySelectorAll<HTMLElement>(
+						`.${constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}`,
+					);
+					rows.forEach((r) => {
+						r.setAttribute("tabindex", r === row ? "0" : "-1");
+					});
+				}
+			}}
 			aria-describedby={constants.SHORTCUTGUIDE_ID.shortcutGuideDescription}
 			aria-labelledby={constants.SHORTCUTGUIDE_ID.shortcutGuideTitle}
 			className={constants.AUTOVIZUA11Y_CLASSES.a11yNavGuide}

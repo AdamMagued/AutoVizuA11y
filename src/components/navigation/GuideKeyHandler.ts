@@ -8,9 +8,27 @@
 import * as constants from "../../constants";
 
 /**
- * Handles the pressing of right arrow key inside the Shortcut Guide
+ * Updates the roving tabindex across shortcut guide rows and moves focus to the target row.
+ *
+ * @param {HTMLElement[]} rows - All shortcut rows in the guide.
+ * @param {number} targetIndex - Index of the row to focus.
  */
-function handleArrowRight(
+function updateRowFocus(rows: HTMLElement[], targetIndex: number): void {
+	rows.forEach((row, index) => {
+		row.setAttribute("tabindex", index === targetIndex ? "0" : "-1");
+	});
+	const targetRow = rows[targetIndex];
+	targetRow.focus();
+	targetRow.scrollIntoView?.({ block: "nearest" });
+}
+
+/**
+ * Handles the pressing of down arrow or right arrow key inside the Shortcut Guide.
+ *
+ * @param {React.KeyboardEvent} event - The keyboard event.
+ * @param {React.RefObject<HTMLDialogElement>} shortcutGuideRef - Reference to the shortcut guide dialog.
+ */
+export function handleArrowDown(
 	event: React.KeyboardEvent,
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>,
 ): void {
@@ -20,24 +38,27 @@ function handleArrowRight(
 	if (!shortcutGuide) return;
 
 	const rows = Array.from(
-		shortcutGuide.querySelectorAll(`.${constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}`),
+		shortcutGuide.querySelectorAll<HTMLElement>(`.${constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}`),
 	);
 	if (rows.length === 0) return;
 
 	const activeElement = document.activeElement;
-	const currentRowIndex = rows.findIndex((row) => row === activeElement);
+	const currentRowIndex = rows.findIndex((row) => row === activeElement || row.contains(activeElement));
 
 	const nextIndex = currentRowIndex === -1 ? 0 : currentRowIndex + 1;
 
 	if (nextIndex < rows.length) {
-		(rows[nextIndex] as HTMLElement).focus();
+		updateRowFocus(rows, nextIndex);
 	}
 }
 
 /**
- * Handles the pressing of left arrow key inside the Shortcut Guide
+ * Handles the pressing of up arrow or left arrow key inside the Shortcut Guide.
+ *
+ * @param {React.KeyboardEvent} event - The keyboard event.
+ * @param {React.RefObject<HTMLDialogElement>} shortcutGuideRef - Reference to the shortcut guide dialog.
  */
-function handleArrowLeft(
+export function handleArrowUp(
 	event: React.KeyboardEvent,
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>,
 ): void {
@@ -47,12 +68,12 @@ function handleArrowLeft(
 	if (!shortcutGuide) return;
 
 	const rows = Array.from(
-		shortcutGuide.querySelectorAll(`.${constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}`),
+		shortcutGuide.querySelectorAll<HTMLElement>(`.${constants.SHORTCUTGUIDE_CLASSES.shortcutGuideRow}`),
 	);
 	if (rows.length === 0) return;
 
 	const activeElement = document.activeElement;
-	const currentRowIndex = rows.findIndex((row) => row === activeElement);
+	const currentRowIndex = rows.findIndex((row) => row === activeElement || row.contains(activeElement));
 
 	let prevIndex = currentRowIndex - 1;
 	if (currentRowIndex === -1) {
@@ -60,15 +81,26 @@ function handleArrowLeft(
 	}
 
 	if (prevIndex >= 0) {
-		(rows[prevIndex] as HTMLElement).focus();
+		updateRowFocus(rows, prevIndex);
 	}
 }
+
+/**
+ * Handles the pressing of right arrow key inside the Shortcut Guide.
+ */
+export const handleArrowRight = handleArrowDown;
+
+/**
+ * Handles the pressing of left arrow key inside the Shortcut Guide.
+ */
+export const handleArrowLeft = handleArrowUp;
 
 /**
  * Listens for shortcutGuide related keypresses and handles the outcomes.
  *
  * @param {React.KeyboardEvent} event - The keyboard event.
- * @param {React.RefObject<HTMLElement>} chartRef - Reference to the chart element.
+ * @param {React.RefObject<HTMLDialogElement>} shortcutGuideRef - Reference to the shortcut guide dialog.
+ * @param {(bool: boolean) => void} setIsShortcutGuideOpen - Setter function for shortcut guide open state.
  */
 export function guideKeyHandler({
 	event,
@@ -91,11 +123,17 @@ export function guideKeyHandler({
 				returnGuide(shortcutGuideRef, setIsShortcutGuideOpen);
 			}
 			break;
-		case "ArrowLeft":
-			handleArrowLeft(event, shortcutGuideRef);
-			break;
+		case "ArrowDown":
 		case "ArrowRight":
-			handleArrowRight(event, shortcutGuideRef);
+			if (shouldHandleKey) {
+				handleArrowDown(event, shortcutGuideRef);
+			}
+			break;
+		case "ArrowUp":
+		case "ArrowLeft":
+			if (shouldHandleKey) {
+				handleArrowUp(event, shortcutGuideRef);
+			}
 			break;
 		default:
 			break;
