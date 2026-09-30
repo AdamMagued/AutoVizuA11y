@@ -9,3 +9,7 @@ import "./i18n";
 
 export { AutoVizuA11y } from "./AutoVizuA11y";
 export { NativeShortcutGuide } from "./components/shortcut_guide/components/NativeShortcutGuide";
+export {
+	getChartTypeDescription,
+	DEFAULT_CHART_TYPE_DESCRIPTIONS,
+} from "./components/descriptions";

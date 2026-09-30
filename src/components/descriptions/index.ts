@@ -7,3 +7,4 @@
 
 export * from "./DescriptionsKeyHandler";
 export * from "./DescriptionsGenerator";
+export * from "./ChartTypeDescriptions";

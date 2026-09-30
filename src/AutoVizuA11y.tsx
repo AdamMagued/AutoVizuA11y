@@ -95,6 +95,14 @@ export type AutoVizuA11yProps = {
 	 */
 	manualDescriptions?: ManualDescriptionsProps;
 	/**
+	 * Optional custom description for the chart type, or a map of chart types to custom descriptions.
+	 */
+	chartTypeDescription?: string | Record<string, string>;
+	/**
+	 * Optional dictionary of custom descriptions for chart types.
+	 */
+	chartTypeDescriptions?: Record<string, string>;
+	/**
 	 * Internationalization settings for the component
 	 */
 	internationalization?: {
@@ -165,6 +173,8 @@ export const AutoVizuA11y = ({
 	shortcutGuide,
 	manualDescriptions,
 	autoDescriptions,
+	chartTypeDescription,
+	chartTypeDescriptions,
 	internationalization,
 	children,
 }: AutoVizuA11yProps) => {
@@ -356,6 +366,8 @@ export const AutoVizuA11y = ({
 				title,
 				descs,
 				autoDescriptions,
+				chartTypeDescription,
+				chartTypeDescriptions,
 				multiSeries,
 				shortcutGuideRef,
 				isShortcutGuideOpen,
@@ -382,6 +394,8 @@ export const AutoVizuA11y = ({
 			title,
 			descs,
 			autoDescriptions,
+			chartTypeDescription,
+			chartTypeDescriptions,
 			multiSeries,
 			shortcutGuideRef,
 			isShortcutGuideOpen,

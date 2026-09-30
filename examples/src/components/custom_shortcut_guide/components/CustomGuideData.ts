@@ -101,6 +101,10 @@ export const CUSTOM_GUIDE_DATA: Section[] = [
 				keys: "Alt + S",
 				description: "Set shorter description of the chart (default)",
 			},
+			{
+				keys: "Alt + T",
+				description: "Describe the chart type",
+			},
 		],
 	},
 ];

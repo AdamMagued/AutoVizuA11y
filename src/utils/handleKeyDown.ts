@@ -39,6 +39,8 @@ interface HandleKeyDownProps {
 	setIsShortcutGuideOpen: (bool: boolean) => void;
 	shortcutGuideRef: React.RefObject<HTMLDialogElement>;
 	autoDescriptions?: AutoDescriptionsProps;
+	chartTypeDescription?: string | Record<string, string>;
+	chartTypeDescriptions?: Record<string, string>;
 	multiSeries?: string;
 	t: TFunction<"translation", undefined>;
 }
@@ -65,6 +67,8 @@ export async function handleKeyDown(
 		title,
 		descs,
 		autoDescriptions,
+		chartTypeDescription,
+		chartTypeDescriptions,
 		multiSeries,
 		shortcutGuideRef,
 		isShortcutGuideOpen,
@@ -97,6 +101,11 @@ export async function handleKeyDown(
 		descs,
 		title,
 		autoDescriptions,
+		alertDivRef,
+		chartTypeDescription,
+		chartTypeDescriptions,
+		t,
+		isShortcutGuideOpen,
 		event,
 	});
 	insightsKeyHandler({

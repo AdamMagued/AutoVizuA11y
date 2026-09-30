@@ -31,3 +31,6 @@ cypress/downloads
 # Test coverage
 .nyc_output
 coverage
+
+# Temporary scripts
+update_readme.cjs

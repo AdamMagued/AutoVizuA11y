@@ -6,6 +6,9 @@
  */
 
 import { template } from "@feedzai/js-utilities";
+import { showAlert } from "../../utils/showAlert";
+import { getChartTypeDescription } from "./ChartTypeDescriptions";
+import type { TFunction } from "i18next";
 
 type AutoDescriptionsProps = {
 	dynamicDescriptions?: boolean;
@@ -21,11 +24,17 @@ interface DescriptionsKeyHandlerParams {
 	descs: string[];
 	title: string;
 	autoDescriptions?: AutoDescriptionsProps;
+	alertDivRef?: React.RefObject<HTMLElement>;
+	chartTypeDescription?: string | Record<string, string>;
+	chartTypeDescriptions?: Record<string, string>;
+	t?: TFunction<"translation", undefined>;
+	isShortcutGuideOpen?: boolean;
 	event?: React.KeyboardEvent;
 }
 
 /**
- * Handles the longer and shorter description change when Alt (option) + B or Alt (option) + S are pressed, respectively.
+ * Handles the longer and shorter description change when Alt (option) + B or Alt (option) + S are pressed,
+ * and announces chart type description when Alt (option) + T is pressed.
  *
  * @export
  */
@@ -36,6 +45,11 @@ export function descriptionsKeyHandler({
 	descs,
 	title,
 	autoDescriptions,
+	alertDivRef,
+	chartTypeDescription,
+	chartTypeDescriptions,
+	t,
+	isShortcutGuideOpen,
 	event,
 }: DescriptionsKeyHandlerParams): void {
 	if (!chartRef.current) return;
@@ -51,14 +65,34 @@ export function descriptionsKeyHandler({
 		setDescriptionContent(fullTitle + descs[1]);
 		return;
 	}
-	if (event.altKey) {
-		switch (event.code) {
+	const altKey = event.altKey ?? event.nativeEvent?.altKey;
+	const code = event.code ?? event.nativeEvent?.code;
+
+	if (altKey) {
+		switch (code) {
 			case "KeyS":
 				setDescriptionContent(fullTitle + descs[1]);
 				break;
 			case "KeyB":
 				setDescriptionContent(fullTitle + descs[0]);
 				break;
+			case "KeyT":
+			case "KeyC": {
+				event.preventDefault();
+				if (isShortcutGuideOpen) return;
+				if (alertDivRef) {
+					const desc = getChartTypeDescription({
+						type,
+						chartTypeDescription,
+						chartTypeDescriptions,
+						t,
+					});
+					if (desc) {
+						showAlert(alertDivRef, desc);
+					}
+				}
+				break;
+			}
 		}
 	}
 }

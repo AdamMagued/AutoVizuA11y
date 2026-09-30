@@ -60,6 +60,26 @@ i18n
 					sg_change_desc_title: "Change chart descriptions",
 					sg_longer_desc: "Set longer description of the chart",
 					sg_shorter_desc: "Set shorter description of the chart (default)",
+					sg_chart_type_desc: "Describe the chart type",
+					chart_type_bar:
+						"A bar chart uses rectangular bars to compare values across categories, with bar lengths proportional to values.",
+					chart_type_line:
+						"A line chart connects data points with straight lines to show trends over continuous intervals or time.",
+					chart_type_pie:
+						"A pie chart is a circular graphic divided into slices illustrating numerical proportions of a whole.",
+					chart_type_scatter:
+						"A scatter plot plots dots on two numeric axes to display relationships or correlations between variables.",
+					chart_type_treemap:
+						"A treemap displays hierarchical data as nested rectangles sized and colored by data dimensions.",
+					chart_type_heatmap:
+						"A heatmap displays values using a color scale on a two-dimensional grid to show variations.",
+					chart_type_area:
+						"An area chart displays quantitative data with colored areas below lines to show volume trends over time.",
+					chart_type_histogram:
+						"A histogram displays numerical data distribution by grouping continuous values into bins.",
+					chart_type_boxplot:
+						"A box plot displays numerical data through quartiles, showing the median, spread, and outliers.",
+					chart_type_unknown: "No description available for {{type}} chart.",
 					sg_description:
 						"AutoVizually shortcut guide. AutoVizually lets you navigate between charts and underlying data elements using just the keyboard. When focused on a chart, a description regarding the data will be provided — you might receive a notification indicating that the chart description was produced by an AI model. For JAWS and NVDA users, it is recommended to turn Focus mode before navigating the data using the arrow keys.",
 					generating_description: "Generating description...",
@@ -126,6 +146,26 @@ i18n
 					sg_change_desc_title: "Alterar descrições do gráfico",
 					sg_longer_desc: "Definir descrição mais longa do gráfico",
 					sg_shorter_desc: "Definir descrição mais curta do gráfico (padrão)",
+					sg_chart_type_desc: "Descrever o tipo de gráfico",
+					chart_type_bar:
+						"Um gráfico de barras usa barras retangulares para comparar valores entre categorias proporcionais aos valores.",
+					chart_type_line:
+						"Um gráfico de linhas liga pontos de dados para mostrar tendências ao longo do tempo.",
+					chart_type_pie:
+						"Um gráfico circular divide um círculo em fatias ilustrando proporções de um todo.",
+					chart_type_scatter:
+						"Um gráfico de dispersão usa pontos em dois eixos para mostrar correlações entre variáveis.",
+					chart_type_treemap:
+						"Um mapa de árvore apresenta dados hierárquicos em retângulos aninhados por dimensões.",
+					chart_type_heatmap:
+						"Um mapa de calor apresenta valores com uma escala de cores numa grelha bidimensional.",
+					chart_type_area:
+						"Um gráfico de áreas preenche o espaço sob linhas para mostrar volume e tendências ao longo do tempo.",
+					chart_type_histogram:
+						"Um histograma apresenta a distribuição de dados numéricos agrupando valores em intervalos.",
+					chart_type_boxplot:
+						"Um diagrama de caixa mostra quartis de dados numéricos, indicando a mediana, dispersão e discrepâncias.",
+					chart_type_unknown: "Sem descrição disponível para o gráfico {{type}}.",
 					sg_description:
 						"Guia de atalhos AutoVizually. O AutoVizually permite navegar entre gráficos e elementos de dados subjacentes usando apenas o teclado. Quando o foco está num gráfico, será fornecida uma descrição sobre os dados — poderá receber uma notificação indicando que a descrição do gráfico foi produzida por um modelo de IA. Para utilizadores de JAWS e NVDA, recomenda-se ativar o modo de Foco antes de navegar pelos dados usando as teclas de seta.",
 					generating_description: "A gerar descrição...",

@@ -110,6 +110,10 @@ export function getGuideData(): Section[] {
 					keys: `${modifierKey} + S`,
 					description: "sg_shorter_desc",
 				},
+				{
+					keys: `${modifierKey} + T`,
+					description: "sg_chart_type_desc",
+				},
 			],
 		},
 	];
